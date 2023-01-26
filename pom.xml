@@ -76,6 +76,7 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+
         <!--Health Check and Metrics - actuator-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
