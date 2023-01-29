@@ -5,6 +5,9 @@ import com.irdeto.rest.repositories.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +25,8 @@ public class ProductRestController {
         return productRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    @Cacheable("product-cache")
     @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable("id") int id) {
         logger.info("Find product by id :: {}", id);
@@ -38,6 +43,7 @@ public class ProductRestController {
         return productRepository.save(product);
     }
 
+    @CacheEvict("product-cache")
     @RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
     public void deleteProduct(@PathVariable("id") int id) {
         productRepository.deleteById(id);
