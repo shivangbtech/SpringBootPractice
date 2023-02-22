@@ -12,3 +12,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_DATABASE: 'mydb'
+
+
+  activemq:
+    image: symptoma/activemq:latest
+    #Container's mapping port
+    ports:
+      - '61616:61616'
+      - '8161:8161'
+    restart: always
