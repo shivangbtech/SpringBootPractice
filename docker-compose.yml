@@ -4,15 +4,19 @@ services:
     container_name: db
     image: mysql/mysql-server:8.0.28
     command: --character-set-server=utf8 --collation-server=utf8_unicode_ci
-    restart: always
-    entrypoint:
-      sh -c "echo CREATE DATABASE IF NOT EXISTS mydb; use mydb; create table product(id int auto_increment PRIMARY KEY, name varchar(20), description varchar(100), price decimal(8,3));"
+    depends_on:
+      - mysql-config
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_DATABASE: 'mydb'
+      -MYSQL_ROOT_PASSWORD: 'root'
+      -MYSQL_DATABASE: 'mydb'
 
+  mysql-config:
+    image: ${DOCKER_HUB_URL:-docker.io}/alpine
+    container_name: mysql-config
+    entrypoint:
+      sh -c "echo 'CREATE DATABASE IF NOT EXISTS mydb; use mydb; create table product(id int auto_increment PRIMARY KEY, name varchar(20), description varchar(100), price decimal(8,3));'"
 
   activemq:
     image: symptoma/activemq:latest
@@ -20,4 +24,3 @@ services:
     ports:
       - '61616:61616'
       - '8161:8161'
-    restart: always

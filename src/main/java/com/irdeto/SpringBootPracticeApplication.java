@@ -1,5 +1,7 @@
 package com.irdeto;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +12,7 @@ import org.springframework.jms.annotation.EnableJms;
 @EnableCaching
 @EnableBatchProcessing
 @EnableJms
+@OpenAPIDefinition(info = @Info(title = "Product API", version = "0.0.0-alpha.0", description = "The Api For Product"))
 public class SpringBootPracticeApplication {
 
     public static void main(String[] args) {
